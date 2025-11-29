@@ -6,44 +6,57 @@
     <title>@yield('title', 'Assistente de Manutenção')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-slate-900 text-white">
-    
-    <!-- Navbar -->
-    <nav class="bg-slate-800 border-b border-slate-700 p-4">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <a href="{{ route('dashboard') }}" class="text-2xl font-bold text-blue-400">
-                🛠️ Assistente de Manutenção
+<body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
+
+    {{-- Top bar --}}
+    <header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur">
+        <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+            <a href="{{ route('dashboard') }}" class="flex items-center gap-2">
+                <span class="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-blue-500/10 text-blue-400">
+                    🛠
+                </span>
+                <div>
+                    <p class="text-sm font-semibold tracking-tight">Assistente de Manutenção</p>
+                    <p class="text-xs text-slate-400">Seu painel pessoal</p>
+                </div>
             </a>
-            <div class="flex gap-6">
-                <a href="{{ route('dashboard') }}" class="hover:text-blue-400 transition">Dashboard</a>
-                <a href="{{ route('om.index') }}" class="hover:text-blue-400 transition">OMs</a>
-                <a href="{{ route('demonstrations.index') }}" class="hover:text-blue-400 transition">Demos</a>
-                <a href="{{ route('tasks.index') }}" class="hover:text-blue-400 transition">Tarefas</a>
+
+            <nav class="flex items-center gap-4 text-sm">
+                <a href="{{ route('dashboard') }}"
+                   class="rounded-md px-3 py-1.5 text-slate-300 hover:bg-slate-800 hover:text-white transition">
+                    Dashboard
+                </a>
+                <a href="{{ route('om.index') }}"
+                   class="rounded-md px-3 py-1.5 text-slate-300 hover:bg-slate-800 hover:text-white transition">
+                    OMs
+                </a>
+                <a href="{{ route('demonstrations.index') }}"
+                   class="rounded-md px-3 py-1.5 text-slate-300 hover:bg-slate-800 hover:text-white transition">
+                    Demos
+                </a>
+                <a href="{{ route('tasks.index') }}"
+                   class="rounded-md px-3 py-1.5 text-slate-300 hover:bg-slate-800 hover:text-white transition">
+                    Tarefas
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="mx-auto max-w-6xl px-4 py-6">
+        {{-- Alerts --}}
+        @if($message = session('success'))
+            <div class="mb-4 rounded-md border border-emerald-500/40 bg-emerald-500/10 px-4 py-2 text-sm text-emerald-200">
+                {{ $message }}
             </div>
-        </div>
-    </nav>
+        @endif
+        @if($message = session('error'))
+            <div class="mb-4 rounded-md border border-rose-500/40 bg-rose-500/10 px-4 py-2 text-sm text-rose-200">
+                {{ $message }}
+            </div>
+        @endif
 
-    <!-- Container Principal -->
-    <div class="min-h-screen p-8">
-        <div class="max-w-7xl mx-auto">
-            
-            <!-- Messages de Sucesso -->
-            @if($message = session('success'))
-                <div class="mb-6 p-4 bg-green-500/20 border border-green-500/50 rounded-lg text-green-300">
-                    {{ $message }}
-                </div>
-            @endif
-
-            @if($message = session('error'))
-                <div class="mb-6 p-4 bg-red-500/20 border border-red-500/50 rounded-lg text-red-300">
-                    {{ $message }}
-                </div>
-            @endif
-
-            <!-- Conteúdo -->
-            @yield('content')
-        </div>
-    </div>
+        @yield('content')
+    </main>
 
 </body>
 </html>
